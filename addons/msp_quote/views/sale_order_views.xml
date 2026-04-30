@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_msp_quote" model="ir.ui.view">
+        <field name="name">sale.order.form.msp.quote</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_msp_submit_tech_review" type="object" string="Submit Tech Review" invisible="state != 'draft'" groups="msp_quote.group_msp_quote_tech_reviewer"/>
+                <button name="action_msp_submit_finance_review" type="object" string="Submit Finance Review" invisible="state != 'tech_review'" groups="msp_quote.group_msp_quote_finance_reviewer"/>
+                <button name="action_msp_approve_quote" type="object" string="Approve" invisible="state != 'finance_review'" groups="msp_quote.group_msp_quote_finance_reviewer"/>
+                <button name="action_msp_reject_quote" type="object" string="Reject" invisible="state not in ['tech_review', 'finance_review']" groups="msp_quote.group_msp_quote_finance_reviewer"/>
+            </xpath>
+            <xpath expr="//sheet/div[hasclass('oe_button_box')]" position="inside">
+                <button type="object" name="action_msp_view_tasks" class="oe_stat_button" icon="fa-tasks">
+                    <field name="x_msp_task_count" widget="statinfo" string="Tasks"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="MSP">
+                    <group string="Approvals">
+                        <field name="x_msp_approved_by" readonly="1"/>
+                        <field name="x_msp_approved_at" readonly="1"/>
+                        <field name="x_msp_rejected_by" readonly="1"/>
+                        <field name="x_msp_rejected_at" readonly="1"/>
+                        <field name="x_msp_rejected_reason"/>
+                        <field name="x_msp_margin_pct" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

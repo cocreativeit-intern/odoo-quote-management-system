@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_msp" model="ir.ui.view">
+        <field name="name">res.partner.form.msp</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div[hasclass('oe_button_box')]" position="inside">
+                <button type="object" name="action_msp_view_quotes" class="oe_stat_button" icon="fa-file-text-o">
+                    <field name="x_msp_quote_count" widget="statinfo" string="Quotes"/>
+                </button>
+                <button type="object" name="action_msp_view_tasks" class="oe_stat_button" icon="fa-tasks">
+                    <field name="x_msp_task_count" widget="statinfo" string="Tasks"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="MSP">
+                    <group>
+                        <group string="Overview">
+                            <field name="x_msp_tenant_code"/>
+                            <field name="x_msp_sla_tier"/>
+                            <field name="x_msp_contract_status"/>
+                        </group>
+                        <group string="Operations">
+                            <field name="x_msp_quote_count" readonly="1"/>
+                            <field name="x_msp_task_count" readonly="1"/>
+                            <field name="x_msp_open_task_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Financial">
+                        <field name="x_msp_quote_total" readonly="1"/>
+                        <field name="x_msp_confirmed_total" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
