@@ -1,0 +1,36 @@
+# Public URL is NOT hosted by github.com itself.
+# Deploy: Render Dashboard -> New -> Blueprint -> connect this repo; you get https://<service>.onrender.com
+#
+# Postgres + Web Service must stay in the same Render region.
+
+databases:
+  - name: odoo-quote-db
+    plan: free
+    region: singapore
+
+services:
+  - type: web
+    name: odoo-quote
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: project-main
+    dockerfilePath: Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: PGHOST
+        fromDatabase:
+          name: odoo-quote-db
+          property: host
+      - key: PGPORT
+        fromDatabase:
+          name: odoo-quote-db
+          property: port
+      - key: PGUSER
+        fromDatabase:
+          name: odoo-quote-db
+          property: user
+      - key: PGPASSWORD
+        fromDatabase:
+          name: odoo-quote-db
+          property: password

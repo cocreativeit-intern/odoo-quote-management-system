@@ -1,9 +1,11 @@
-FROM python:3.12-slim
+FROM odoo:19
 
-WORKDIR /app
+USER root
 
-COPY . /app
+COPY deploy/docker-entrypoint-render.sh /usr/local/bin/docker-entrypoint-render.sh
+RUN chmod 0755 /usr/local/bin/docker-entrypoint-render.sh
 
-# Baseline container for CI/CD image publishing.
-# Replace CMD with actual Odoo startup once runtime dependencies are finalized.
-CMD ["python", "-V"]
+COPY addons /mnt/extra-addons
+RUN chown -R odoo:odoo /mnt/extra-addons
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint-render.sh"]
