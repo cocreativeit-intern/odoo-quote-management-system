@@ -18,6 +18,11 @@ services:
     dockerfilePath: Dockerfile
     healthCheckPath: /
     envVars:
+      # Canonical DB name for Render Postgres (fixes empty schema + KeyError ir.http on first HTTP hit).
+      - key: ODOO_DB_NAME
+        fromDatabase:
+          name: odoo-quote-db
+          property: database
       - key: PGHOST
         fromDatabase:
           name: odoo-quote-db
